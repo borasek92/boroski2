@@ -37,7 +37,7 @@ export default function Navbar() {
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
               <Link href="/" className="text-white hover:text-primary-400 transition-colors">
-                Strona główna
+                Home
               </Link>
               <Link href="/services" className="text-white hover:text-primary-400 transition-colors">
                 Usługi
@@ -84,7 +84,7 @@ export default function Navbar() {
               className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
-              Strona główna
+              Home
             </Link>
             <Link 
               href="/services" 
