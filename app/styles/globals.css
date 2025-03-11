@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 9, 9, 51;
+  --background-end-rgb: 39, 38, 83;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    )
+    fixed;
+  @apply antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-500;
+}
+
+/* Custom animations */
+.gradient-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600 animate-gradient;
+  background-size: 200% 200%;
+}
+
+.hover-gradient {
+  @apply transition-all duration-300;
+}
+
+.hover-gradient:hover {
+  @apply bg-gradient-to-r from-primary-600 to-primary-500 shadow-glow;
+}
+
+/* Component styles */
+@layer components {
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-md font-medium transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply relative inline-flex items-center justify-center px-6 py-3 bg-dark-600 hover:bg-dark-500 text-white rounded-md font-medium transition-all duration-300 border border-primary-500 hover:border-primary-400;
+  }
+  
+  .btn-outline {
+    @apply relative inline-flex items-center justify-center px-6 py-3 bg-transparent hover:bg-primary-500/10 text-primary-400 rounded-md font-medium transition-all duration-300 border border-primary-500;
+  }
+  
+  .card {
+    @apply bg-dark-700/50 backdrop-blur-sm rounded-xl p-6 border border-dark-500 hover:border-primary-500/50 transition-all duration-300;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold font-heading mb-8 text-white;
+  }
+  
+  .section-subtitle {
+    @apply text-xl font-semibold mb-6 text-primary-400;
+  }
+  
+  .input-field {
+    @apply bg-dark-700 border-dark-500 rounded-md focus:ring-primary-500 focus:border-primary-500 text-white placeholder-dark-300 w-full;
+  }
+}
