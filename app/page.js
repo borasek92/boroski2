@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import ContactForm from './components/ContactForm';
 import SectionTitle from './components/SectionTitle';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -630,41 +631,76 @@ export default function Home() {
 </section>
       
 {/* Services Section */}
-<section id="services" className="py-20 bg-dark-800">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <SectionTitle
-      subtitle="Usługi"
-      title="Jak mogę pomóc <span>Twojej firmie</span>"
-    />
+<section id="services" className="py-20 bg-dark-800/80 backdrop-blur-sm relative">
+  {/* Background elements */}
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-radial from-primary-500/10 to-transparent blur-3xl"></div>
+    <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-radial from-primary-700/10 to-transparent blur-3xl"></div>
+  </div>
+
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+    >
+      <SectionTitle
+        subtitle="Usługi"
+        title="Jak mogę pomóc <span>Twojej firmie</span>"
+      />
+    </motion.div>
     
     <div className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {services.map((service) => (
-        <div 
+      {services.map((service, index) => (
+        <motion.div
           key={service.id}
-          className="bg-dark-800 rounded-xl p-6 cursor-pointer 
-            hover:bg-dark-700/80 transition-all duration-300 
-            hover:translate-y-[-8px] hover:shadow-lg hover:shadow-primary-500/20
-            border border-dark-700 hover:border-primary-500/40
-            flex flex-col items-center text-center group"
-          onClick={() => setActiveService(service.id)}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={{ once: true }}
         >
-          <div className="text-primary-400 mb-4 transform transition-transform duration-300 group-hover:scale-110">
-            {service.icon}
+          <div 
+            className="service-card group overflow-hidden cursor-pointer"
+            onClick={() => setActiveService(service.id)}
+          >
+            {/* Subtle radial gradient background */}
+            <div className="absolute inset-0 bg-gradient-radial from-primary-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <div className="relative z-10">
+              <div className="text-primary-400 mb-4 transform transition-transform duration-300 group-hover:scale-110 flex justify-center">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors duration-300 text-center">
+                {service.title}
+              </h3>
+              
+              {/* Hover reveal description */}
+              <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-3 transition-all duration-300 overflow-hidden text-gray-300 text-sm text-center">
+                <p>{service.description.substring(0, 80)}...</p>
+              </div>
+            </div>
+            
+            {/* Bottom gradient line on hover */}
+            <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-purple-400 group-hover:w-full transition-all duration-500"></div>
           </div>
-          <h3 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors duration-300">
-            {service.title}
-          </h3>
-        </div>
+        </motion.div>
       ))}
     </div>
     
     {/* Modal ze szczegółami usługi */}
     {activeService && (
-      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-        <div className="bg-dark-800 rounded-xl max-w-2xl w-full p-8 relative">
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ type: "spring", damping: 20 }}
+          className="glass-card max-w-2xl w-full p-8 relative shadow-xl"
+        >
           {/* Zamknięcie panelu */}
           <button 
-            className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
             onClick={() => setActiveService(null)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -674,7 +710,7 @@ export default function Home() {
 
           {/* Treść szczegółów */}
           <div className="flex items-start mb-6">
-            <div className="mr-4 text-primary-400">
+            <div className="mr-6 text-primary-400 p-4 bg-primary-500/10 rounded-lg">
               {services.find(s => s.id === activeService)?.icon}
             </div>
             <div>
@@ -690,18 +726,40 @@ export default function Home() {
           {/* Lista cech */}
           <div>
             <h3 className="text-lg font-semibold text-primary-400 mb-3">Kluczowe możliwości:</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 grid grid-cols-1 md:grid-cols-2 gap-2">
               {services.find(s => s.id === activeService)?.features.map((feature, index) => (
-                <li key={index} className="flex items-center text-gray-300">
-                  <svg className="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <motion.li 
+                  key={index} 
+                  className="flex items-center text-gray-300 bg-dark-800/40 p-3 rounded-lg"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <svg className="w-5 h-5 text-primary-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
-                  {feature}
-                </li>
+                  <span>{feature}</span>
+                </motion.li>
               ))}
             </ul>
           </div>
-        </div>
+          
+          {/* CTA button */}
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => {
+                setActiveService(null);
+                scrollToSection('contact');
+              }}
+              className="gradient-btn"
+            >
+              Porozmawiajmy o Twoim projekcie
+              <svg className="ml-2 h-5 w-5 inline" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </motion.div>
       </div>
     )}
   </div>
