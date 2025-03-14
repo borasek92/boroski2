@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     // Dodaj opóźnienie, aby symulować ładowanie strony
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Preloader będzie aktywny przez 3 sekundy
+    }, 1500); // Preloader będzie aktywny przez 3 sekundy
     
     return () => clearTimeout(timer);
   }, []);
