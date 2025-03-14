@@ -67,7 +67,6 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
-<<<<<<< HEAD
               <button
                 onClick={() => scrollToSection('hero')}
                 className={`text-white transition-colors ${
@@ -82,18 +81,6 @@ export default function Navbar() {
                   activeSection === 'about' ? 'text-primary-400' : 'hover:text-primary-400'
                 }`}
               >
-=======
-              <Link href="/" className="text-white hover:text-primary-400 transition-colors">
-                Home
-              </Link>
-              <Link href="/services" className="text-white hover:text-primary-400 transition-colors">
-                Usługi
-              </Link>
-              <Link href="/projects" className="text-white hover:text-primary-400 transition-colors">
-                Realizacje
-              </Link>
-              <Link href="/about" className="text-white hover:text-primary-400 transition-colors">
->>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
                 O mnie
               </button>
               <button
@@ -153,34 +140,12 @@ export default function Navbar() {
               onClick={() => scrollToSection('hero')}
             >
               Home
-<<<<<<< HEAD
             </button>
             <button 
               className={`block w-full text-left px-3 py-2 ${
                 activeSection === 'about' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
               } rounded-md`}
               onClick={() => scrollToSection('about')}
-=======
-            </Link>
-            <Link 
-              href="/services" 
-              className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Usługi
-            </Link>
-            <Link 
-              href="/projects" 
-              className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Realizacje
-            </Link>
-            <Link 
-              href="/about" 
-              className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
->>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
             >
               O mnie
             </button>
