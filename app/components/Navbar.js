@@ -6,19 +6,50 @@ import Link from 'next/link';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
+      // Zmiana wyglądu nawigacji przy przewijaniu
       if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
+      }
+
+      // Aktualizacja aktywnej sekcji na podstawie pozycji przewijania
+      const sections = ['hero', 'about', 'services', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 80; // Dodajemy offset dla wysokości nawigacji
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (!element) continue;
+        
+        const offsetTop = element.offsetTop;
+        const offsetBottom = offsetTop + element.offsetHeight;
+        
+        if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+          setActiveSection(section);
+          break;
+        }
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Funkcja do przewijania do sekcji
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80, // Uwzględnienie wysokości navbara
+        behavior: 'smooth'
+      });
+      setIsMenuOpen(false); // Zamknij menu mobilne po kliknięciu
+    }
+  };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -36,6 +67,22 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
+<<<<<<< HEAD
+              <button
+                onClick={() => scrollToSection('hero')}
+                className={`text-white transition-colors ${
+                  activeSection === 'hero' ? 'text-primary-400' : 'hover:text-primary-400'
+                }`}
+              >
+                Home
+              </button>
+              <button
+                onClick={() => scrollToSection('about')}
+                className={`text-white transition-colors ${
+                  activeSection === 'about' ? 'text-primary-400' : 'hover:text-primary-400'
+                }`}
+              >
+=======
               <Link href="/" className="text-white hover:text-primary-400 transition-colors">
                 Home
               </Link>
@@ -46,11 +93,31 @@ export default function Navbar() {
                 Realizacje
               </Link>
               <Link href="/about" className="text-white hover:text-primary-400 transition-colors">
+>>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
                 O mnie
-              </Link>
-              <Link href="/contact" className="btn-primary">
+              </button>
+              <button
+                onClick={() => scrollToSection('services')}
+                className={`text-white transition-colors ${
+                  activeSection === 'services' ? 'text-primary-400' : 'hover:text-primary-400'
+                }`}
+              >
+                Usługi
+              </button>
+              <button
+                onClick={() => scrollToSection('projects')}
+                className={`text-white transition-colors ${
+                  activeSection === 'projects' ? 'text-primary-400' : 'hover:text-primary-400'
+                }`}
+              >
+                Realizacje
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className={`btn-primary`}
+              >
                 Kontakt
-              </Link>
+              </button>
             </div>
           </div>
           
@@ -79,12 +146,21 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-dark-700/95 backdrop-blur-md">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link 
-              href="/" 
-              className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+            <button 
+              className={`block w-full text-left px-3 py-2 ${
+                activeSection === 'hero' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
+              } rounded-md`}
+              onClick={() => scrollToSection('hero')}
             >
               Home
+<<<<<<< HEAD
+            </button>
+            <button 
+              className={`block w-full text-left px-3 py-2 ${
+                activeSection === 'about' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
+              } rounded-md`}
+              onClick={() => scrollToSection('about')}
+=======
             </Link>
             <Link 
               href="/services" 
@@ -104,16 +180,34 @@ export default function Navbar() {
               href="/about" 
               className="block px-3 py-2 text-white hover:bg-dark-600 rounded-md"
               onClick={() => setIsMenuOpen(false)}
+>>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
             >
               O mnie
-            </Link>
-            <Link 
-              href="/contact" 
-              className="block px-3 py-2 text-primary-400 hover:bg-dark-600 rounded-md"
-              onClick={() => setIsMenuOpen(false)}
+            </button>
+            <button 
+              className={`block w-full text-left px-3 py-2 ${
+                activeSection === 'services' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
+              } rounded-md`}
+              onClick={() => scrollToSection('services')}
+            >
+              Usługi
+            </button>
+            <button 
+              className={`block w-full text-left px-3 py-2 ${
+                activeSection === 'projects' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
+              } rounded-md`}
+              onClick={() => scrollToSection('projects')}
+            >
+              Realizacje
+            </button>
+            <button 
+              className={`block w-full text-left px-3 py-2 ${
+                activeSection === 'contact' ? 'text-primary-400 bg-dark-600' : 'text-white hover:bg-dark-600'
+              } rounded-md`}
+              onClick={() => scrollToSection('contact')}
             >
               Kontakt
-            </Link>
+            </button>
           </div>
         </div>
       )}
