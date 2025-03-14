@@ -4,69 +4,79 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Preloader() {
+  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Symulacja ładowania zasobów
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500); // 2.5 sekundy ładowania
+    // Ukryj stronę podczas ładowania
+    document.body.classList.add('loading');
     
-    return () => clearTimeout(timer);
-  }, []);
+    // Symulacja progresu ładowania
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const newProgress = prev + Math.floor(Math.random() * 10) + 5;
+        
+        if (newProgress >= 100) {
+          clearInterval(interval);
+          // Poczekaj chwilę przed zakończeniem ładowania
+          setTimeout(() => {
+            setLoading(false);
+            // Odkryj stronę po zakończeniu ładowania
+            document.body.classList.remove('loading');
+          }, 500);
+          return 100;
+        }
+        return newProgress;
+      });
+    }, 300);
 
-  // Animacja znikania preloadera
-  const fadeOut = {
-    hidden: { opacity: 1 },
-    visible: { 
-      opacity: 0,
-      transition: { 
-        duration: 0.8,
-        ease: "easeInOut"
-      }
-    }
-  };
+    return () => {
+      clearInterval(interval);
+      document.body.classList.remove('loading');
+    };
+  }, []);
 
   if (!loading) return null;
 
   return (
-    <motion.div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-dark-900"
-      initial="hidden"
-      animate={loading ? "hidden" : "visible"}
-      variants={fadeOut}
-      onAnimationComplete={() => {
-        if (!loading) {
-          document.body.style.overflow = 'auto';
-        } else {
-          document.body.style.overflow = 'hidden';
-        }
-      }}
-    >
-      <div className="flex flex-col items-center">
-        {/* Logo lub ikona */}
-        <div className="relative w-24 h-24 mb-8">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-400 rounded-full opacity-20 animate-pulse-slow"></div>
-          {/* Twoje logo lub ikona */}
+    <div className={`preloader ${!loading ? 'preloader-hidden' : ''}`}>
+      <div className="loading-container">
+        {/* Logo */}
+        <div className="loading-logo">
+          <div className="loading-pulse"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-4xl font-bold text-white">BB</span>
-            {/* Alternatywnie możesz użyć swojego SVG logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="text-4xl font-bold text-white">BB</span>
+            </motion.div>
           </div>
         </div>
         
-        {/* Pasek ładowania */}
-        <div className="w-48 h-1 bg-dark-700 rounded-full overflow-hidden">
+        {/* Pasek postępu */}
+        <div className="loading-progress">
           <motion.div 
-            className="h-full bg-gradient-to-r from-primary-500 to-primary-400"
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 2, ease: "easeInOut" }}
+            className="loading-bar"
+            style={{ width: `${progress}%` }}
           />
         </div>
         
         {/* Tekst ładowania */}
-        <p className="text-gray-400 mt-4">Ładowanie...</p>
+        <div className="flex items-center mt-4">
+          <span className="loading-text mr-2">Ładowanie strony</span>
+          <svg className="svg-spinner w-4 h-4 text-primary-400" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeDasharray="31.4 31.4">
+            </circle>
+          </svg>
+        </div>
+        
+        {/* Procent ładowania */}
+        <div className="mt-2">
+          <span className="text-sm text-primary-400">{progress}%</span>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
