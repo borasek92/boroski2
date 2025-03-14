@@ -39,15 +39,31 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Funkcja do przewijania do sekcji
+  // Ulepszona funkcja do przewijania do sekcji
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
+    try {
+      const element = document.getElementById(sectionId);
+      if (!element) {
+        console.error(`Element with id ${sectionId} not found`);
+        return;
+      }
+      
+      // Alternatywna metoda przewijania
+      element.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+
+      // Dodatkowe zabezpieczenie - przewijanie przez window.scrollTo
       window.scrollTo({
-        top: element.offsetTop - 80, // Uwzględnienie wysokości navbara
+        top: element.offsetTop - 80,
         behavior: 'smooth'
       });
-      setIsMenuOpen(false); // Zamknij menu mobilne po kliknięciu
+
+      // Zamknij menu mobilne
+      setIsMenuOpen(false);
+    } catch (error) {
+      console.error('Błąd przewijania:', error);
     }
   };
 
