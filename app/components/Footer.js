@@ -37,18 +37,12 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4">Nawigacja</h3>
             <ul className="space-y-2">
               <li>
-<<<<<<< HEAD
                 <button 
                   onClick={() => scrollToSection('hero')} 
                   className="text-gray-300 hover:text-primary-400 transition-colors"
                 >
                   Home
                 </button>
-=======
-                <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors">
-                  Home
-                </Link>
->>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
               </li>
               <li>
                 <button 
