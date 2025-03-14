@@ -117,6 +117,42 @@ body {
   .animate-card:hover {
     @apply transform -translate-y-2;
   }
+  
+  /* Preloader Styles */
+  .preloader {
+    @apply fixed inset-0 z-[9999] flex items-center justify-center bg-dark-900;
+  }
+  
+  .preloader-hidden {
+    @apply opacity-0 pointer-events-none;
+    transition: opacity 0.8s ease-in-out;
+  }
+  
+  .loading-container {
+    @apply flex flex-col items-center;
+  }
+  
+  .loading-logo {
+    @apply relative w-24 h-24 mb-8;
+  }
+  
+  .loading-pulse {
+    @apply absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-400 rounded-full opacity-20;
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .loading-progress {
+    @apply w-48 h-1 bg-dark-700 rounded-full overflow-hidden;
+  }
+  
+  .loading-bar {
+    @apply h-full bg-gradient-to-r from-primary-500 to-primary-400;
+    animation: loading-progress 2s ease-in-out forwards;
+  }
+  
+  .loading-text {
+    @apply text-gray-400 mt-4 text-sm;
+  }
 }
 
 /* Dodaj animacje dla elementów tła */
@@ -162,5 +198,77 @@ body {
   to {
     transform: scale(4);
     opacity: 0;
+  }
+}
+
+/* Dodatkowe animacje dla preloadera */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Dodatkowa animacja dla wolniejszego pulsowania */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animacja paska postępu */
+@keyframes loading-progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Style dla ukrywania zawartości podczas ładowania */
+.content-loading {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.content-loaded {
+  opacity: 1;
+}
+
+/* Ukrywanie zawartości strony podczas ładowania preloadera */
+body.loading {
+  overflow: hidden;
+}
+
+/* SVG Spinner */
+.svg-spinner {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
