@@ -14,7 +14,7 @@ export default function Preloader() {
     // Symulacja progresu ładowania
     const interval = setInterval(() => {
       setProgress(prev => {
-        const newProgress = prev + Math.floor(Math.random() * 10) + 5;
+        const newProgress = prev + Math.floor(Math.random() * 15) + 10; // Większy skok
         
         if (newProgress >= 100) {
           clearInterval(interval);
@@ -23,12 +23,12 @@ export default function Preloader() {
             setLoading(false);
             // Odkryj stronę po zakończeniu ładowania
             document.body.classList.remove('loading');
-          }, 500);
+          }, 250); // Krótsze opóźnienie
           return 100;
         }
         return newProgress;
       });
-    }, 300);
+    }, 150); // Szybszy interwał
 
     return () => {
       clearInterval(interval);
