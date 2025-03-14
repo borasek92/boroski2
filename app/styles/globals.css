@@ -6,14 +6,14 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 9, 9, 51;
-  --background-end-rgb: 39, 38, 83;
+  --background-start-rgb: 10, 10, 30; /* Ciemniejszy granatowy */
+  --background-end-rgb: 30, 25, 60; /* Z nutą fioletu */
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
+      135deg,
       rgb(var(--background-start-rgb)),
       rgb(var(--background-end-rgb))
     )
@@ -59,11 +59,11 @@ body {
   }
   
   .btn-secondary {
-    @apply relative inline-flex items-center justify-center px-6 py-3 bg-dark-600 hover:bg-dark-500 text-white rounded-md font-medium transition-all duration-300 border border-primary-500 hover:border-primary-400;
+    @apply relative inline-flex items-center justify-center px-6 py-3 bg-dark-600 hover:bg-dark-500 text-white rounded-md font-medium transition-all duration-300 border border-primary-500/50 hover:border-primary-400;
   }
   
   .btn-outline {
-    @apply relative inline-flex items-center justify-center px-6 py-3 bg-transparent hover:bg-primary-500/10 text-primary-400 rounded-md font-medium transition-all duration-300 border border-primary-500;
+    @apply relative inline-flex items-center justify-center px-6 py-3 bg-transparent hover:bg-primary-500/10 text-primary-400 rounded-md font-medium transition-all duration-300 border border-primary-500/50;
   }
   
   .card {
@@ -80,5 +80,87 @@ body {
   
   .input-field {
     @apply bg-dark-700 border-dark-500 rounded-md focus:ring-primary-500 focus:border-primary-500 text-white placeholder-dark-300 w-full;
+  }
+
+  /* Dodane nowe style dla kart usług */
+  .service-card {
+    @apply bg-dark-800/60 backdrop-blur-sm rounded-xl p-6 border border-dark-700 transition-all duration-300;
+    background-image: radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent 70%);
+  }
+
+  .service-card:hover {
+    @apply transform -translate-y-2 shadow-lg border-primary-500/40;
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.1), 0 8px 10px -6px rgba(124, 58, 237, 0.1);
+  }
+
+  /* Gradientowe przyciski */
+  .gradient-btn {
+    @apply relative inline-flex items-center justify-center px-6 py-3 text-white rounded-md font-medium transition-all duration-300;
+    background: linear-gradient(90deg, #7c3aed, #8b5cf6);
+  }
+  
+  .gradient-btn:hover {
+    background: linear-gradient(90deg, #6d28d9, #7c3aed);
+    box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3);
+  }
+
+  /* Efekt glassmorphism dla kart */
+  .glass-card {
+    @apply bg-dark-800/60 backdrop-blur-md rounded-xl border border-white/5;
+  }
+  
+  /* Animowane karty */
+  .animate-card {
+    @apply transition-all duration-500;
+  }
+  
+  .animate-card:hover {
+    @apply transform -translate-y-2;
+  }
+}
+
+/* Dodaj animacje dla elementów tła */
+.animated-bg-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Animowany gradient tła */
+.animated-gradient-bg {
+  background: linear-gradient(270deg, #0f172a, #1e1b4b, #2e1065);
+  background-size: 600% 600%;
+  animation: gradientAnimation 16s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Ripple effect dla przycisków */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
   }
 }
