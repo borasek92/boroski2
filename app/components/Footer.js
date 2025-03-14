@@ -1,7 +1,20 @@
-import Link from 'next/link';
+'use client';
+
+import { useState } from 'react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  
+  // Funkcja do przewijania do sekcji
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80, // Uwzględnienie wysokości navbara
+        behavior: 'smooth'
+      });
+    }
+  };
   
   return (
     <footer className="bg-dark-800 border-t border-dark-600">
@@ -9,10 +22,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Column 1 */}
           <div>
-            <Link href="/" className="flex items-center">
+            <button onClick={() => scrollToSection('hero')} className="flex items-center">
               <span className="text-xl font-bold text-primary-400">Bartłomiej</span>
               <span className="text-xl font-bold text-white ml-1">Boroski</span>
-            </Link>
+            </button>
             <p className="mt-4 text-gray-300 text-sm">
               Kierownik Projektów IT z 13-letnim doświadczeniem w&nbsp;wdrożeniach systemów ERP. 
               Specjalista w&nbsp;integracji, automatyzacji procesów i&nbsp;wykorzystaniu sztucznej inteligencji w biznesie.
@@ -24,29 +37,50 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4">Nawigacja</h3>
             <ul className="space-y-2">
               <li>
+<<<<<<< HEAD
+                <button 
+                  onClick={() => scrollToSection('hero')} 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
+                  Home
+                </button>
+=======
                 <Link href="/" className="text-gray-300 hover:text-primary-400 transition-colors">
                   Home
                 </Link>
+>>>>>>> 40547fec092b455263ae337e3a603f7eb99209af
               </li>
               <li>
-                <Link href="/services" className="text-gray-300 hover:text-primary-400 transition-colors">
+                <button 
+                  onClick={() => scrollToSection('services')} 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
                   Usługi
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-300 hover:text-primary-400 transition-colors">
+                <button 
+                  onClick={() => scrollToSection('process')} 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
+                  Jak pracuję
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('projects')} 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
                   Realizacje
-                </Link>
+                </button>
               </li>
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-primary-400 transition-colors">
-                  O mnie
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-primary-400 transition-colors">
+                <button 
+                  onClick={() => scrollToSection('contact')} 
+                  className="text-gray-300 hover:text-primary-400 transition-colors"
+                >
                   Kontakt
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -75,11 +109,15 @@ export default function Footer() {
                 <svg className="h-5 w-5 mr-2 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                 </svg>
-                <Link href="/contact" className="hover:text-primary-400 transition-colors">
+                <button 
+                  onClick={() => scrollToSection('contact')} 
+                  className="hover:text-primary-400 transition-colors"
+                >
                   Formularz kontaktowy
-                </Link>
+                </button>
               </li>
             </ul>
+            
             {/* Social Media Icons */}
             <div className="flex mt-4 space-x-4">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-primary-400 transition-colors">
