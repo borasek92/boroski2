@@ -642,14 +642,16 @@ export default function Home() {
         <div 
           key={service.id}
           className="bg-dark-800 rounded-xl p-6 cursor-pointer 
-            hover:bg-dark-700 transition-all duration-300 hover:translate-y-[-5px]
-            flex flex-col items-center text-center"
+            hover:bg-dark-700/80 transition-all duration-300 
+            hover:translate-y-[-8px] hover:shadow-lg hover:shadow-primary-500/20
+            border border-dark-700 hover:border-primary-500/40
+            flex flex-col items-center text-center group"
           onClick={() => setActiveService(service.id)}
         >
-          <div className="text-primary-400 mb-4">
+          <div className="text-primary-400 mb-4 transform transition-transform duration-300 group-hover:scale-110">
             {service.icon}
           </div>
-          <h3 className="text-xl font-semibold text-white">
+          <h3 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors duration-300">
             {service.title}
           </h3>
         </div>
