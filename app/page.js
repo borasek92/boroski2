@@ -674,11 +674,6 @@ export default function Home() {
               <h3 className="text-xl font-semibold text-white group-hover:text-primary-400 transition-colors duration-300 text-center">
                 {service.title}
               </h3>
-              
-              {/* Hover reveal description */}
-              <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-3 transition-all duration-300 overflow-hidden text-gray-300 text-sm text-center">
-                <p>{service.description.substring(0, 80)}...</p>
-              </div>
             </div>
             
             {/* Bottom gradient line on hover */}
@@ -742,22 +737,6 @@ export default function Home() {
                 </motion.li>
               ))}
             </ul>
-          </div>
-          
-          {/* CTA button */}
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => {
-                setActiveService(null);
-                scrollToSection('contact');
-              }}
-              className="gradient-btn"
-            >
-              Porozmawiajmy o Twoim projekcie
-              <svg className="ml-2 h-5 w-5 inline" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
           </div>
         </motion.div>
       </div>
